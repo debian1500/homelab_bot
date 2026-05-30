@@ -1,0 +1,16 @@
+.env
+tokens.go
+secret/
+
+homelab_bot
+main
+app
+/bin/
+
+
+.vscode/
+.idea/
+*.suo
+*.swp
+*.log
+tmp/
