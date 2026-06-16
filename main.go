@@ -7,13 +7,11 @@ import (
 	"strings" // Для преобразования прочитанного файла в человеко-читаемый вид
 	"time"    // Для константы time.Second
 
-	tele "gopkg.in/telebot.v3"
 	"github.com/joho/godotenv" // Для работы с переменными
-
+	tele "gopkg.in/telebot.v3"
 )
 
 func main() {
-
 
 	godotenv.Load()
 
@@ -23,12 +21,11 @@ func main() {
 		log.Fatal("Ошибка: Переменная BOT_TOKEN не найдена!")
 	}
 
-	// userID из переменной (env) 
+	// userID из переменной (env)
 	UserIDRaw := os.Getenv("USER_ID")
-        if UserIDRaw == "" {
-                log.Fatal("Ошибка: Переменная USER_ID не найдена!")
+	if UserIDRaw == "" {
+		log.Fatal("Ошибка: Переменная USER_ID не найдена!")
 	}
-
 
 	// Преобразование userID в int64
 
@@ -36,7 +33,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Ошибка: не удалось преобразовать USER_ID в число: %v", err)
 	}
-
 
 	pref := tele.Settings{
 		Token:  BotToken,
@@ -79,6 +75,12 @@ func main() {
 
 	bot.Handle("/start", func(c tele.Context) error {
 		return c.Send("Привет! Бот работает.")
+	})
+
+	bot.Handle("/stats", func(c tele.Context) error {
+		meminfoContent := GetStatsReport()
+
+		return c.Send(meminfoContent)
 	})
 
 	bot.Start()
